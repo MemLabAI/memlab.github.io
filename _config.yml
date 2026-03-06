@@ -1,7 +1,7 @@
 title: memlab
 description: Something is baking... Coming back soon!
 baseurl: ""
-url: ""
+url: "https://memlab.ai"
 
 exclude:
   - README.md
