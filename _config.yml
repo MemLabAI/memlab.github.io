@@ -1,0 +1,9 @@
+title: memlab
+description: Something is baking... Coming back soon!
+baseurl: ""
+url: ""
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

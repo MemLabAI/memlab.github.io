@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>memlab — Coming Soon</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #fdf6f0;
+      color: #3e2723;
+      overflow: hidden;
+    }
+
+    .bg-grain {
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      max-width: 600px;
+    }
+
+    .oven {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+      animation: wobble 2s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(-3deg) scale(1.03); }
+      75% { transform: rotate(3deg) scale(1.03); }
+    }
+
+    .steam {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 0.5rem;
+    }
+
+    .steam span {
+      display: block;
+      width: 8px;
+      height: 20px;
+      background: #d7ccc8;
+      border-radius: 50%;
+      opacity: 0;
+      animation: rise 2s ease-out infinite;
+    }
+
+    .steam span:nth-child(2) { animation-delay: 0.4s; }
+    .steam span:nth-child(3) { animation-delay: 0.8s; }
+
+    @keyframes rise {
+      0%   { opacity: 0; transform: translateY(0) scaleY(1); }
+      40%  { opacity: 0.6; }
+      100% { opacity: 0; transform: translateY(-50px) scaleX(1.8) scaleY(2); }
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #5d4037, #8d6e63);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 1.15rem;
+      color: #6d4c41;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #bcaaa4, transparent);
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      max-width: 320px;
+      height: 10px;
+      background: #efebe9;
+      border-radius: 99px;
+      margin: 0 auto 0.75rem;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #a1887f, #8d6e63, #6d4c41);
+      animation: bake 4s ease-in-out infinite;
+    }
+
+    @keyframes bake {
+      0%   { width: 0%; }
+      50%  { width: 78%; }
+      100% { width: 0%; }
+    }
+
+    .progress-label {
+      font-size: 0.8rem;
+      color: #a1887f;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: #bcaaa4;
+    }
+
+    .ingredients {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .ingredient {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.78rem;
+      color: #8d6e63;
+      opacity: 0;
+      animation: fadeUp 0.6s forwards;
+    }
+
+    .ingredient:nth-child(1) { animation-delay: 0.2s; }
+    .ingredient:nth-child(2) { animation-delay: 0.4s; }
+    .ingredient:nth-child(3) { animation-delay: 0.6s; }
+    .ingredient:nth-child(4) { animation-delay: 0.8s; }
+
+    .ingredient span:first-child {
+      font-size: 1.6rem;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      .oven { font-size: 3.5rem; }
+      .tagline { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grain"></div>
+
+  <div class="container">
+    <div class="steam">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="oven">🍞</div>
+
+    <h1>Something is Baking...</h1>
+
+    <p class="tagline">
+      We're kneading ideas, mixing creativity,<br>
+      and letting things rise to perfection.<br>
+      This site will be fresh out of the oven soon.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <p class="progress-label">Baking in progress</p>
+
+    <div class="ingredients">
+      <div class="ingredient">
+        <span>🧈</span>
+        <span>Ideas</span>
+      </div>
+      <div class="ingredient">
+        <span>🥚</span>
+        <span>Design</span>
+      </div>
+      <div class="ingredient">
+        <span>🍫</span>
+        <span>Code</span>
+      </div>
+      <div class="ingredient">
+        <span>🌾</span>
+        <span>Polish</span>
+      </div>
+    </div>
+
+    <p class="footer">coming back soon &mdash; stay tuned!</p>
+  </div>
+</body>
+</html>
